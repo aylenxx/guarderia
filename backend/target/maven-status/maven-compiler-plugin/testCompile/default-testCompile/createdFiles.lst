@@ -1,0 +1,5 @@
+com\guarderia\service\RecepcionServiceTest.class
+com\guarderia\service\AuthServiceTest.class
+com\guarderia\controller\AuthControllerTest.class
+com\guarderia\service\MatriculaServiceTest.class
+com\guarderia\service\AsistenciaServiceTest.class

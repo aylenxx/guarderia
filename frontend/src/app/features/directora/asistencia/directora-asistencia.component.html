@@ -1,0 +1,56 @@
+<div class="container mt-4">
+  <h2>Asistencia General Consolidada</h2>
+  <p class="text-muted">Consulta la asistencia de todas las aulas por rango de fechas.</p>
+
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <label for="fechaInicio" class="form-label">Desde:</label>
+      <input type="date" id="fechaInicio" class="form-control" [(ngModel)]="fechaInicio" (change)="consultarAsistencia()">
+    </div>
+    <div class="col-md-4">
+      <label for="fechaFin" class="form-label">Hasta:</label>
+      <input type="date" id="fechaFin" class="form-control" [(ngModel)]="fechaFin" (change)="consultarAsistencia()">
+    </div>
+  </div>
+
+  <div *ngIf="cargando" class="alert alert-info">
+    Cargando registros de asistencia...
+  </div>
+
+  <div *ngIf="mensajeError" class="alert alert-danger">
+    {{ mensajeError }}
+  </div>
+
+  <div *ngIf="!cargando && asistencias.length === 0" class="alert alert-warning">
+    No se encontraron registros de asistencia para el rango de fechas seleccionado.
+  </div>
+
+  <div *ngIf="!cargando && asistencias.length > 0" class="table-responsive">
+    <table class="table table-striped table-hover mt-3">
+      <thead class="table-dark">
+        <tr>
+          <th>Fecha</th>
+          <th>Aula</th>
+          <th>Niño</th>
+          <th>Estado</th>
+          <th>Hora Registro</th>
+          <th>Observaciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let a of asistencias">
+          <td>{{ a.fecha }}</td>
+          <td><span class="badge bg-secondary">{{ a.nombreAula }}</span></td>
+          <td>{{ a.nombreNino }}</td>
+          <td>
+            <span class="badge" [ngClass]="{'bg-success': a.presente, 'bg-danger': !a.presente}">
+              {{ a.presente ? 'Presente' : 'Ausente' }}
+            </span>
+          </td>
+          <td>{{ a.horaRegistro ? (a.horaRegistro | date:'mediumTime') : '--:--' }}</td>
+          <td>{{ a.observaciones || '-' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
